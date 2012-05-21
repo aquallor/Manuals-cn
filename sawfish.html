@@ -42,7 +42,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#dir">(dir)</a>
 </li><li><a accesskey="4" href="#Colors">颜色</a>: 			Color type
 </li><li><a accesskey="5" href="#Fonts">字体</a>: 			Font type
 </li><li><a accesskey="6" href="#Images">图像</a>: 			Image type
-</li><li><a accesskey="7" href="#Cursors">Cursors</a>: 			Cursor type
+</li><li><a accesskey="7" href="#Cursors">光标</a>: 			Cursor type
 </li><li><a accesskey="8" href="#Windows">Windows</a>: 			Window type
 </li><li><a accesskey="9" href="#Customization">Customization</a>: 		Supporting user-configuration
 
@@ -4752,8 +4752,8 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 
 <div class="defun">
 — 函数： <b>make-image-from-x-drawable</b><var> id </var><tt>#!optional</tt><var> mask-id<a name="index-make_002dimage_002dfrom_002dx_002ddrawable-32"></a></var><br>
-<blockquote><p>创建并返回一幅图像。这幅图像通过复制X可绘制区（id标识）来构造成一个Sawfish图像对象。
-        </p><p>如果指定了<var>mask-id</var>，它将识别另一个X可绘制区。在这个可绘制区中黑色像素表示在图像对象中的透明像素（非黑色像素在图像对象上没有效果）。
+<blockquote><p>创建并返回一幅图像。这幅图像通过复制X画布（id标识）来构造成一个Sawfish图像对象。
+        </p><p>如果指定了<var>mask-id</var>，它将识别另一个X画布。在这个画布中黑色像素表示在图像对象中的透明像素（非黑色像素在图像对象上没有效果）。
 </p></blockquote></div>
 
 <div class="defun">
@@ -4933,52 +4933,38 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 
 </div>
 
-<h2 class="chapter">7 Cursors</h2>
+<h2 class="chapter">7 光标</h2>
 
 <p><a name="index-Cursors-58"></a>
-Cursors define the shape and hot-spot of the mouse pointer's image.  A
-lisp type is provided for manipulating these objects. For pointer
-related functions, See <a href="#Pointer-Functions">Pointer Functions</a>.
+光标定义了鼠标指针的图像的形状和热点。Sawfish提供了一个用于处理这些对象的lisp类型。对于和指针有关的函数，参见<a href="#Pointer-Functions">指针函数</a>。
 
 </p><div class="defun">
 — 函数： <b>cursorp</b><var> arg<a name="index-cursorp-59"></a></var><br>
-<blockquote><p>Returns <code>t</code> if <var>arg</var> is a member of the cursor type. 
+<blockquote><p>当<var>arg</var>是一种光标类型时返回<code>t</code>。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>get-cursor</b><var> data<a name="index-get_002dcursor-60"></a></var><br>
-<blockquote><p>Returns the cursor object representing the cursor defined by
-<var>data</var>. If <var>data</var> is a symbol, it's replaced by its
-<code>cursor-shape</code> property.
+<blockquote><p>返回表示由<var>data</var>所定义的光标的光标对象。如果<var>data</var>是一个符号，将使用它的<code>cursor-shape</code>属性代替。
 
-        </p><p>Possible <var>data</var> values are an integer representing a glyph in the
-standard X11 cursor font, or a four-element vector.
+        </p><p>可以使用的<var>data</var>的值是一个表示标准X11光标字型中的一个字形的整数，或者一个四元素的向量。
 
-        </p><p>The format for a vector is <code>[</code><var>image</var> <var>mask</var> <var>fg</var>
-<var>bg</var><code>]</code> where <var>image</var> and <var>mask</var> are the filenames of
-standard X11 bitmaps, and <var>fg</var> and <var>bg</var> are colors (or names of
-colors). All bitmap files are searched for using the
-<code>image-load-path</code> variable. 
+        </p><p>向量的格式是<code>[</code><var>image</var> <var>mask</var> <var>fg</var>
+<var>bg</var><code>]</code>，其中<var>image</var>和<var>mask</var>是标准X11的位图文件名，而<var>fg</var>和<var>bg</var>是颜色（或者颜色的名字）。所有位图文件通过变量<code>image-load-path</code>查找。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>recolor-cursor</b><var> cursor fg bg<a name="index-recolor_002dcursor-61"></a></var><br>
-<blockquote><p>Change the colors of the cursor object <var>cursor</var> to <var>fg</var> and
-<var>bg</var> (either color objects or the names of colors). 
+<blockquote><p>将光标对象<var>cursor</var>的颜色变为<var>fg</var>和<var>bg</var>（不管是颜色对象还是颜色名）。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>default-cursor</b> <tt>#!optional</tt><var> cursor<a name="index-default_002dcursor-62"></a></var><br>
-<blockquote><p>Set the cursor object displayed in the root window, and in parts of
-window frames that have no other cursor specified, to <var>cursor</var>.
-
-        </p><p>If called with no argument, simply return the current such cursor
-object. 
+<blockquote><p>设置显示在根窗口的光标对象，以及其它没有指定光标的窗口框架的光标为<var>cursor</var>。
+        </p><p>如果不带参数地调用，函数就仅仅返回当前光标对象。
 </p></blockquote></div>
 
-   <p>So that the integer indices of glyphs in the X11 cursor font do not
-have to be remembered, the <code>cursor-shape</code> properties of the
-following symbols are automatically set:
+   <p>因此没有必要记忆用于索引X11光标字型中的字形的整数，下列符号的<code>cursor-shape</code>属性都会被自动设置：
 
 </p><p class="noindent"><code>X_cursor</code>, <code>arrow</code>, <code>based_arrow_down</code>,
 <code>based_arrow_up</code>, <code>boat</code>, <code>bogosity</code>,
@@ -5004,8 +4990,7 @@ following symbols are automatically set:
 <code>top_tee</code>, <code>trek</code>, <code>ul_angle</code>, <code>umbrella</code>,
 <code>ur_angle</code>, <code>watch</code>, <code>xterm</code>.
 
-   </p><p>The glyphs associated with these names are shown in Appendix I, of
-Volume Two, <cite>Xlib Reference Manual</cite>.
+   </p><p>字形与这些名字的意义见<cite>Xlib Reference Manual</cite>第二卷的附录Ｉ。
 
 </p><div class="node">
 <a name="Windows"></a>
