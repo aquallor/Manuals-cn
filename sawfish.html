@@ -4717,292 +4717,211 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 <h2 class="chapter">6 图像</h2>
 
 <p><a name="index-Images-26"></a>
-The image type allows arbitrary 24-bit images to be manipulated by the
-window manager. Images may be both loaded from files, and rendered
-dynamically.
+图像类型允许窗口管理器处理任何24位颜色深度的图像。图像既可以从文件读取，也可以被动态渲染。
 
 </p><div class="defun">
 — 函数： <b>imagep</b><var> arg<a name="index-imagep-27"></a></var><br>
-<blockquote><p>Returns <code>t</code> when <var>arg</var> is a member of the image type. 
+<blockquote><p>当<var>arg</var>是一种图像类型时返回<code>t</code>。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>make-image</b><var> file-name </var><tt>#!optional</tt><var> plist<a name="index-make_002dimage-28"></a></var><br>
-<blockquote><p>Creates and returns an image object containing the image defined by the
-contents of the file named <var>file-name</var> (a string). The
-<code>image-load-path</code> directory provides the search path used while
-trying to find a directory containing the file named <var>file-name</var>.
+<blockquote><p>创建并返回一个包含名为<var>file-name</var>（一个字符串）的文件的内容生成的图像的图像对象。当试图寻找一个包含名为<var>file-name</var>的文件的目录时，<code>image-load-path</code>目录提供了搜索路径。
 
-        </p><p>All common image formats will likely be able to be loaded. But PNG,
-JPEG and XPM should always be supported.
+        </p><p>所有通用的图像格式都很可能被读取。但PNG、JPEG和XPM应该总是被支持的。
 
-        </p><p>Argument <var>plist</var> becomes the property list of the returned image.
+        </p><p>参数<var>plist</var>将成为所返回的图像的属性列表。
 
-        </p><p>Signals an error if file called <var>file-name</var> may be found, or if an
-image may not be constructed from the file. 
-</p></blockquote></div>
+        </p><p>如果文件<var>file-name</var>没有找到，或者没有从文件中构造出一幅图像，将抛出一个错误。</p></blockquote></div>
 
 <div class="defun">
 — 变量： <b>image-directory</b><var><a name="index-image_002ddirectory-29"></a></var><br>
-<blockquote><p>Directory containing built-in Sawfish images.  By default, this is
-<var>sawfish-directory</var><code>/images</code>. 
+<blockquote><p>包含内置Sawfish图像的目录。缺省情况下，这是指<var>sawfish-directory</var><code>/images</code>。
 </p></blockquote></div>
 
 <div class="defun">
 — 变量： <b>image-load-path</b><var><a name="index-image_002dload_002dpath-30"></a></var><br>
-<blockquote><p>A list of directory names. This defines the search path used when
-loading images.  By default, this is <code>("." 
-</code><var>image-directory</var><code>)</code>.  Modifying <var>image-directory</var> does not
-modify <var>image-load-path</var>. 
+<blockquote><p>目录名的列表。它定义了在加载图像时的搜索路径。缺省情况下，值为<code>("." 
+</code><var>image-directory</var><code>)</code>。改变<var>image-directory</var>并不会改变 <var>image-load-path</var>。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>make-sized-image</b><var> width height </var><tt>#!optional</tt><var> color<a name="index-make_002dsized_002dimage-31"></a></var><br>
-<blockquote><p>Create and return a new image, of size <var>width</var>,  <var>height</var>. If
-<var>color</var> is defined it specifies the color of all pixels in the
-image. If undefined, all pixels will be black. 
+<blockquote><p>创建并返回一幅宽为<var>width</var>高为<var>height</var>的图像。如果<var>color</var>有定义，那么它将指定图像中所有像素的颜色。如果没有，所有像素都是黑色。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>make-image-from-x-drawable</b><var> id </var><tt>#!optional</tt><var> mask-id<a name="index-make_002dimage_002dfrom_002dx_002ddrawable-32"></a></var><br>
-<blockquote><p>Create and return an new image.  The image is constructed by copying
-an X Drawable (identified by <var>id</var>) into a Sawfish image object. 
-The function automatically handles depth conversion.
-
-        </p><p>If <var>mask-id</var> is given, it identifies another X Drawable.  Black
-pixels in this drawable indicate transparent pixels in the image
-object (non-black pixels have no effect on the image object). 
+<blockquote><p>创建并返回一幅图像。这幅图像通过复制X可绘制区（id标识）来构造成一个Sawfish图像对象。
+        </p><p>如果指定了<var>mask-id</var>，它将识别另一个X可绘制区。在这个可绘制区中黑色像素表示在图像对象中的透明像素（非黑色像素在图像对象上没有效果）。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>copy-image</b><var> image<a name="index-copy_002dimage-33"></a></var><br>
-<blockquote><p>Returns a newly allocated image object, an exact copy of the image
-object <var>image</var>. 
+<blockquote><p>返回一个新分配的图像对象，这是对图像对象<var>image</var>的精确复制。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>image-dimensions</b><var> image<a name="index-image_002ddimensions-34"></a></var><br>
-<blockquote><p>Returns a cons-cell <code>(</code><var>width</var><code> . </code><var>height</var><code>)</code> defining the
-dimensions of the image represented by <var>image</var>. 
+<blockquote><p>返回一个定义了表示<var>image</var>的图像的尺寸的点对<code>(</code><var>width</var><code> . </code><var>height</var><code>)</code>。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>flip-image-horizontally</b><var> image<a name="index-flip_002dimage_002dhorizontally-35"></a></var><br>
-<blockquote><p>Flip the contents of <var>image</var> about the vertical axis. 
-This is a mutating operation that returns the modified argument. 
+<blockquote><p>以垂直轴为对称轴翻转<var>image</var>的内容。这是一个破坏性的操作，将返回一个修改过的参数。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>flip-image-vertically</b><var> image<a name="index-flip_002dimage_002dvertically-36"></a></var><br>
-<blockquote><p>Flip the contents of <var>image</var> about the horizontal axis. 
-This is a mutating operation that returns the modified argument. 
+<blockquote><p>以水平轴为对称轴翻转<var>image</var>的内容。这是一个破坏性的操作，将返回一个修改过的参数。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>flip-image-diagonally</b><var> image<a name="index-flip_002dimage_002ddiagonally-37"></a></var><br>
-<blockquote><p>Flip the contents of <var>image</var> about an axis running from the
-top-left corner to the bottom-right corner of the image. 
-This is a mutating operation that returns the modified argument. 
+<blockquote><p>以从左上角到右下角的对角线为对称轴翻转<var>image</var>的内容。这是一个破坏性的操作，将返回一个修改过的参数。
 </p></blockquote></div>
 
-   <p>As with many of the other types, arbitrary state may be associated with
-image objects.
+   <p>和很多其它类型一样，图像对象可以关联任意的状态。
 
 </p><div class="defun">
 — 函数： <b>image-put</b><var> image property value<a name="index-image_002dput-38"></a></var><br>
-<blockquote><p>Set the property named <var>property</var> (a symbol) of <var>image</var> to
-<var>value</var>. 
+<blockquote><p>设置<var>image</var>中名为<var>property</var>（一个符号）的属性为<var>value</var>。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>image-get</b><var> image property<a name="index-image_002dget-39"></a></var><br>
-<blockquote><p>Return the property named <var>property</var> of <var>image</var>, or <code>nil</code>
-if no such property exists. 
+<blockquote><p>返回<var>image</var>中名为<var>property</var>的属性的值，如果没有这个属性就返回<code>nil</code>。
 </p></blockquote></div>
 
-   <p>The only predefined property is the symbol <code>tiled</code>, used when an
-image is displayed in a window decoration. When set to a non-nil value
-the image is not scaled to the size of the decoration (the default),
-but is tiled across the decoration.
+   <p>唯一一个预定义的属性是符号<code>tiled</code>，在图像被用于窗口装饰时使用。当值不为nil时图像将不会被拉伸为装饰的大小，而是平铺到装饰上。
 
-   </p><p>When images are scaled across border decorations the pixels that are
-actually scaled are defined by the <dfn>border</dfn> of the image. The
-border defines the outer rectangle of pixels that are left as-is, and
-the inner rectangle which is scaled.
+   </p><p>当图像被拉伸以穿过装饰的边框时，实际被拉伸的像素由图像的<dfn>边框</dfn>来决定。边框定义了左边像素的外接矩形，而内接矩形被拉伸。
 
 </p><div class="defun">
 — 函数： <b>image-border</b><var> image<a name="index-image_002dborder-40"></a></var><br>
-<blockquote><p>Returns a list of integers <code>(</code><var>left</var> <var>right</var> <var>top</var>
-<var>bottom</var><code>)</code>, the border of the image object <var>image</var>.
+<blockquote><p>返回一个表示图像对象<var>image</var>的边框的整数列表<code>(</code><var>left</var> <var>right</var> <var>top</var>
+<var>bottom</var><code>)</code>。
 
-        </p><p>The number associated with each edge of the image defines the number of
-pixels adjacent to that edge that <em>will not</em> be scaled. 
+        </p><p>和图像的每一个边框关联的数字定义了<em>不会</em>被拉伸的相邻边缘的像素数目。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>set-image-border</b><var> image left right top bottom<a name="index-set_002dimage_002dborder-41"></a></var><br>
-<blockquote><p>Sets the border of <var>image</var>.
+<blockquote><p>设置<var>image</var>的边框。
 
-        </p><p>The number associated with each edge of the image defines the number of
-pixels adjacent to that edge that <em>will not</em> be scaled. 
+        </p><p>和图像的每一个边框关联的数字定义了<em>不会</em>被拉伸的相邻边缘的像素数目。
 </p></blockquote></div>
 
-   <p>The shape of the image may also be specified, this defines which pixels
-are treated as being transparent. Each image may define a single color
-as marking transparent pixels.
+   <p>图像的形状也可以被指定，这会定义哪些像素将被透明处理。每一幅图像都定义了单独一个颜色来标记透明像素。
 
-   </p><p>Image shapes are not supported under GDK Pixbuf.  Sawfish will
-print a diagnostic message to <code>STDERR</code> if the function is called
-without being supported.
+   </p><p>图像形状不被GDK Pixbuf所支持。如果函数在不被支持的情况下被调用，Sawfish将向<code>STDERR</code>打印诊断信息。
 
 </p><div class="defun">
 — 函数： <b>image-shape-color</b><var> image<a name="index-image_002dshape_002dcolor-42"></a></var><br>
-<blockquote><p>Return the color marking transparent pixels in <var>image</var>, or
-<code>nil</code> if no such color has been specified. 
+<blockquote><p>返回在<var>image</var>中标记透明像素的颜色，如果没有指定颜色就返回<code>nil</code>。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>set-image-shape-color</b><var> image color<a name="index-set_002dimage_002dshape_002dcolor-43"></a></var><br>
-<blockquote><p>Specify that <var>color</var> marks transparent pixels in <var>image</var>. 
+<blockquote><p>将<var>image</var>中标记透明像素的颜色指定为<var>color</var>。
 </p></blockquote></div>
 
-   <p>It's also possible to define <dfn>color modifiers</dfn> for each image. 
-These define the transformation applied to the value of each pixel when
-it is displayed. Four different modifiers exist for each image, one for
-each color component, and one for the image as a whole.
+   <p>也可以为每一幅图像定义<dfn>颜色修改器</dfn>。这将定义在显示时应用到每一个像素上的值的变换。每一个图像都有四个不同的修改器，每一个颜色成份都对应一个，还有一个对应于整个图像。
 
 </p><div class="defun">
 — 函数： <b>image-modifier</b><var> image type<a name="index-image_002dmodifier-44"></a></var><br>
-<blockquote><p>Return the modifier defined by the symbol <var>type</var> of <var>image</var>, a
-list of integers <code>(</code><var>gamma</var> <var>brightness</var> <var>contrast</var><code>)</code>. 
-Each integer has a value between zero and 255 representing the weight
-applied to the associated attribute when rendering the image.
+<blockquote><p>返回一个由<var>image</var>中的符号<var>type</var>定义的修改器，这是一个形如<code>(</code><var>gamma</var> <var>brightness</var> <var>contrast</var><code>)</code>。每一个整数都有一个从0到255之间的值，表示在渲染图像时应用到对应属性上的权重。
 
-        </p><p>The four types are <code>red</code>, <code>green</code>, <code>blue</code> and <code>nil</code>
-(all colors).  The argument must be <code>eq</code> to one of those symbols. 
+        </p><p>四种类型是<code>red</code>，<code>green</code>，<code>blue</code>和<code>nil</code>（所有颜色）。参数必须和这些符号中的一个属于<code>eq</code>的相等级别。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>set-image-modifier</b><var> image type gamma brightness contrast<a name="index-set_002dimage_002dmodifier-45"></a></var><br>
-<blockquote><p>Set the image modifier of <var>image</var> defined by <var>type</var>. 
-<var>Type</var> may be one of the values of (not the symbols) <code>red</code>,
-<code>green</code> or <code>blue</code>. 
+<blockquote><p>通过<var>type</var>来设置<var>image</var>的图像修改器。<var>type</var>应该为<code>red</code>、
+<code>green</code>或<code>blue</code>（而不是符号）中的一个值。
 </p></blockquote></div>
 
-   <p>There are also several other functions manipulating images:
+   <p>这里还有其他处理图像的函数：
 
 </p><div class="defun">
 — 函数： <b>bevel-image</b><var> image border upwards </var><tt>#!optional</tt><var> bevel-percent<a name="index-bevel_002dimage-46"></a></var><br>
-<blockquote><p>Transform the edgemost pixels of <var>image</var> to give it a “bevelled”
-effect. <var>BORDER</var> is an integer defining the width of the bevel. If
-<var>upwards</var> is non-nil the bevel is raised, otherwise it is lowered.
+<blockquote><p>变换<var>image</var>中最边缘的像素使其产生“倾斜”效果。<var>BORDER</var>是一个定义倾斜的宽度的整数。如果<var>upwards</var>不是nil那么倾斜角将升高，否则将被降低。
 
-        </p><p>If <var>bevel-percent</var> is defined it specifies the height or depth of
-the drawn bevel. When undefined, the value of the parameter is taken
-from the <code>default-bevel-percent</code> variable. 
+        </p><p>如果定义了<var>bevel-percent</var>，那么它指定了所绘制的截成斜角的高度和深度。如果没有定义，那么参数的值将取自于<code>default-bevel-percent</code>这个变量。
 </p></blockquote></div>
 
 <div class="defun">
 — 变量： <b>default-bevel-percent</b><var><a name="index-default_002dbevel_002dpercent-47"></a></var><br>
-<blockquote><p>Default height of drawn bevels, as a percentage.  Normally 50%. 
+<blockquote><p>绘制的截成斜角的默认高度，以百分数表示。正常情况下为50%。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>clear-image</b><var> image </var><tt>#!optional</tt><var> color<a name="index-clear_002dimage-48"></a></var><br>
-<blockquote><p>Set all pixels in <var>image</var> to <var>color</var> (or black if <var>color</var>
-is undefined). 
+<blockquote><p>设置所有在<var>image</var>中的像素为<var>color</var>（如果<var>color</var>没有定义就是黑色）颜色。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>tile-image</b><var> dest-image source-image<a name="index-tile_002dimage-49"></a></var><br>
-<blockquote><p>Tiles <var>source-image</var> into <var>dest-image</var>, starting from the
-upper-left corner, working outwards. 
+<blockquote><p>从左上角开始将<var>source-image</var>平铺在<var>dest-image</var>上，在外表上起作用。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>scale-image</b><var> image width height<a name="index-scale_002dimage-50"></a></var><br>
-<blockquote><p>Return a copy of <var>image</var>, scaled to <var>width</var> by <var>height</var>
-pixels. 
+<blockquote><p>返回一张拉伸为<var>width</var>乘以<var>height</var>像素的<var>image</var>的拷贝。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>composite-images</b><var> image1 image2 </var><tt>#!optional</tt><var> x y<a name="index-composite_002dimages-51"></a></var><br>
-<blockquote><p>Copy the contents of <var>image2</var> into <var>image1</var>.  <var>Image2</var> is
-cropped to fit.  Arguments <var>x</var> and <var>y</var> indicate the position
-in <var>image1</var> of the top-left corner of <var>image2</var>.  If not
-supplied, they default to 0. 
+<blockquote><p>复制<var>image2</var>的内容到<var>image1</var>中。<var>image2</var>被裁剪以适应<var>image1</var>。参数<var>x</var>和<var>y</var>指示<var>image2</var>的左上角在<var>image1</var>中的位置。如果没有提供，它们默认为0。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>crop-image</b><var> image x y width height<a name="index-crop_002dimage-52"></a></var><br>
-<blockquote><p>Return a new image that is a rectangular section of <var>image</var>.  The
-result image starts at pixel (<var>x</var>, <var>y</var>) in <var>image</var>, and
-extends over <var>width</var> and <var>height</var> pixels in <var>image</var>.
+<blockquote><p>返回一幅新图像，它是<var>image</var>的一个矩形区域。结果图像从<var>image</var>的像素(<var>x</var>，<var>y</var>)处开始截取，且伸展为像素为<var>width</var>和<var>height</var>的区域。
 
-        </p><p>When the cropped image extends beyond the boundary of <var>image</var>, the
-behavior is undefined. 
+        </p><p>当裁剪的区域扩展到超过<var>image</var>的边界时，函数的行为是未定义的。
 </p></blockquote></div>
 
-   <p>The following functions allow users to manipulate images on a
-pixel-by-pixel level.  They all use a list representation for pixels:
-(<var>r</var>, <var>g</var>, <var>b</var>, <var>a</var>) indicating the red, green, blue
-and alpha components
+   <p>下列函数允许用户在一个像素的等级上处理图像。它们都使用一个表示像素的列表：(<var>r</var>, <var>g</var>, <var>b</var>, <var>a</var>)表示红、绿、蓝和alpha通道成份。
 
 </p><div class="defun">
 — 函数： <b>image-ref</b><var> image x y<a name="index-image_002dref-53"></a></var><br>
-<blockquote><p>Return a list (<var>r</var>, <var>g</var>, <var>b</var>, <var>a</var>) of the red, green,
-blue and alpha components of the pixel (<var>x</var>, <var>y</var>) in
-<var>image</var>.
+<blockquote><p>返回在<var>image</var>的(<var>x</var>, <var>y</var>)处的像素的红、绿、蓝和alpha通道值的列表(<var>r</var>, <var>g</var>, <var>b</var>, <var>a</var>)。
 
-        </p><p>When the pixel position extends outside the bounds of the image, the
-behavior is undefined. 
+        </p><p>当像素的位置超出图像的边界时，函数的行为是未定义的。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>image-set</b><var> image x y pixel<a name="index-image_002dset-54"></a></var><br>
-<blockquote><p>Set the pixel at (<var>x</var>, <var>y</var>) in <var>image</var> to <var>pixel</var>. 
-<var>Pixel</var> is a list of four numbers (<var>r</var>, <var>g</var>, <var>b</var>,
-<var>a</var>), the red, green, blue and alpha components.
+<blockquote><p>将在<var>image</var>中(<var>x</var>, <var>y</var>)位置的像素设置为<var>pixel</var>。<var>Pixel</var>是一个数字列表(<var>r</var>, <var>g</var>, <var>b</var>,
+<var>a</var>)，即红、绿、蓝和alpha通道值。
 
-        </p><p>When the pixel position extends outside the bounds of the image, the
-behavior is undefined. 
+        </p><p>当像素位置超出图像边界，函数行为是未定义的。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>image-map</b><var> xform image<a name="index-image_002dmap-55"></a></var><br>
-<blockquote><p>Transform each pixel in <var>image</var> in place by calling <var>xform</var> on
-each pixel in the image.
+<blockquote><p>对<var>image</var>中的每一个像素调用<var>xform</var>并用计算结果替换原来的像素。
+        </p><p><var>xform</var>接受一个四元素的列表(<var>r</var>,
+<var>g</var>, <var>b</var>, <var>a</var>)作为参数，表示一个像素的红、绿、蓝和alpha通道值。<var>xform</var>应当返回一个给定像素的新的值。返回的形式是同样的四元素列表。
 
-        </p><p><var>Xform</var> takes a single argument, a four element list (<var>r</var>,
-<var>g</var>, <var>b</var>, <var>a</var>) indicating the red, green, blue and alpha
-components of a pixel.  <var>Xform</var> should return the new value for
-the pixel it was given.  The return format is the same four-element
-list.
-
-        </p><p><var>Xform</var> is allowed to return <code>nil</code>.  In this case,
-<code>image-map</code> immediately returns an invalid object. 
+        </p><p><var>xform</var>也可以返回<code>nil</code>。在这种情况下，<code>image-map</code>立即返回一个无效的对象。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>image-fill</b><var> generator image<a name="index-image_002dfill-56"></a></var><br>
-<blockquote><p>Set each pixel in <var>image</var> based on the results of calling
-<var>generator</var>.
+<blockquote><p>将<var>image</var>中的每一个像素设置为调用<var>generator</var>的结果。
 
-        </p><p><var>Generator</var> takes two arguments: the X and Y coordinates of a
-pixel.  It returns a four element list (<var>r</var>, <var>g</var>, <var>b</var>,
-<var>a</var>) indicating the red, green, blue and alpha components of a
-pixel.  This new pixel replaces the current pixel contents at (X, Y).
+        </p><p><var>Generator</var>接受两个参数：一个像素的X和Y坐标。返回一个表示红、绿、蓝和alpha通道值的四元素列表(<var>r</var>, <var>g</var>, <var>b</var>,
+<var>a</var>)。这个新的像素替换了当前像素在(X，Y)处的内容。
 
-        </p><p><var>Generator</var> is allowed to return <code>nil</code>.  In this case,
-<code>image-map</code> immediately returns an invalid object. 
+        </p><p><var>Generator</var>允许返回<code>nil</code>。在这种情况下，<code>image-map</code>立即返回一个无效的对象。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>pixmap-cache-control</b><var> max<a name="index-pixmap_002dcache_002dcontrol-57"></a></var><br>
-<blockquote><p>Tell Sawfish to cache no more than <var>max</var> pixels.  Returns a
-four-element list indicating the current cache status:
-<code>(</code><var>max-cached-pixels</var><code>, </code><var>cached-pixels</var><code>, </code><var>hits</var><code>,
-</code><var>misses</var><code>)</code>. 
+<blockquote><p>告诉Sawfish缓存最多<var>max</var>个像素。返回一个表示当前缓存状态的四元素列表：<code>(</code><var>max-cached-pixels</var><code>, </code><var>cached-pixels</var><code>, </code><var>hits</var><code>,
+</code><var>misses</var><code>)</code>。
 </p></blockquote></div>
 
 <div class="node">
