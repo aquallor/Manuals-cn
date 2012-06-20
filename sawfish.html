@@ -43,7 +43,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#dir">(dir)</a>
 </li><li><a accesskey="5" href="#Fonts">字体</a>: 			Font type
 </li><li><a accesskey="6" href="#Images">图像</a>: 			Image type
 </li><li><a accesskey="7" href="#Cursors">光标</a>: 			Cursor type
-</li><li><a accesskey="8" href="#Windows">Windows</a>: 			Window type
+</li><li><a accesskey="8" href="#Windows">窗口</a>: 			Window type
 </li><li><a accesskey="9" href="#Customization">Customization</a>: 		Supporting user-configuration
 
 </li><li><a href="#Window-Frames">Window Frames</a>: 		Decorating windows
@@ -5001,28 +5001,22 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 
 </div>
 
-<h2 class="chapter">8 Windows</h2>
+<h2 class="chapter">8 窗口</h2>
 
 <p><a name="index-Windows-63"></a>
-One of the most important data types in sawfish is the window type. All
-managed client windows have a single window object associated with
-them.
+sawfish中最重要的数据类型之一是窗口类型。所有可管理的客户端窗口都有一个单一关联的窗口对象。
 
 </p><div class="defun">
 — 函数： <b>windowp</b><var> arg<a name="index-windowp-64"></a></var><br>
-<blockquote><p>Returns <code>t</code> if <var>arg</var> is a member of the window type, and has a
-client window associated with it. 
+<blockquote><p>当<var>arg</var>是一种窗口类型并且关联到一个客户端窗口上时返回<var>t</var>。
 </p></blockquote></div>
 
-   <p>Since the root window is not a managed client window, it is not
-represented by a window object. Sometimes functions' arguments and
-return value treat the symbol <code>root</code> as the root window. Window
-hooks are so. But sometimes not.
+   <p>因为根窗口不是一个可管理的客户端窗口，因此它不是由一个窗口对象表示的。有时候函数的参数和返回值会将符号<code>root</code>作为根窗口对待。窗口挂钩也是一样的。但有时候不是这样的。
 
 
-</p><p>Basics:
+</p><p>基础:
 </p><ul class="menu">
-<li><a accesskey="1" href="#Window-Attributes">Window Attributes</a>
+<li><a accesskey="1" href="#Window-Attributes">窗口属性</a>
 </li><li><a accesskey="2" href="#Getting-Windows">Getting Windows</a>:  Get window by name, class, all, etc. 
 </li><li><a accesskey="3" href="#Window-Property-Lists">Window Property Lists</a>:  Plist attached by Sawfish. 
 </li><li><a accesskey="4" href="#Window-Types">Window Types</a>:   Some windows have type, like transient. 
@@ -5057,149 +5051,127 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Windows">Windows</a>
 
 </div>
 
-<h3 class="section">8.1 Window Attributes</h3>
+<h3 class="section">8.1 窗口属性</h3>
 
 <p><a name="index-Window-attributes-65"></a><a name="index-Attributes_002c-of-windows-66"></a><a name="index-Windows_002c-attributes-of-67"></a>
-Many attributes are described in the related sections.
+很多特征在相关的章节中描述。
 
-   </p><p>First, basic attributes, like name, class, ID, etc.
+   </p><p>首先是基础属性，例如名字、类、ID等。
 
 </p><div class="defun">
 — 函数： <b>window-name</b><var> window<a name="index-window_002dname-68"></a></var><br>
-<blockquote><p>Return the name associated with <var>window</var>. 
+<blockquote><p>返回关联到<var>window</var>上的名字。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>window-full-name</b><var> window<a name="index-window_002dfull_002dname-69"></a></var><br>
-<blockquote><p>Return the full-name associated with <var>window</var>. This may or may not
-be the same as the normal name. 
+<blockquote><p>返回和<var>window</var>关联的完整名字。这可能和正常的名字一样也可能不一样。
 </p></blockquote></div>
 
-   <p>Sawfish provides functions to ensure that window names are unique.
+   <p>Sawfish提供了保证窗口名字唯一的函数。
 
 </p><div class="defun">
 — 函数： <b>uniquify-name</b><var> proposal existing<a name="index-uniquify_002dname-70"></a></var><br>
-<blockquote><p>Uniquify the string <var>proposal</var> against the list of strings
-<var>existing</var>.  Uses the format string <code>uniquify-name-format</code> to
-generate unique names. 
+<blockquote><p>和字符串列表<var>existing</var>相比使字符串<var>proposal</var>唯一化。使用格式字符串<code>uniquify-name-format</code>来产生唯一的名字。
 </p></blockquote></div>
 
 <div class="defun">
 — 变量： <b>uniquify-name-format</b><var><a name="index-uniquify_002dname_002dformat-71"></a></var><br>
-<blockquote><p>Format to create unique window names.  Defaults to <code>"%s [%d]"</code>. 
+<blockquote><p>产生唯一窗口名字的格式。默认为<code>"%s [%d]"</code>。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>uniquify-window-name</b><var> window<a name="index-uniquify_002dwindow_002dname-72"></a></var><br>
 — Command: <b>uniquify-window-name</b><var> window<a name="index-uniquify_002dwindow_002dname-73"></a></var><br>
-<blockquote><p>Force <var>window</var> to have a unique title. 
+<blockquote><p>强制使<var>window</var>拥有唯一的标题。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>rename-window</b><var> win name<a name="index-rename_002dwindow-74"></a></var><br>
-<blockquote><p>Change the window's name to <var>name</var>. This works in practice, but
-technically ICCCM doesn't suppose window name changes. 
+<blockquote><p>改变窗口的名字为<var>name</var>。这在实际中可以用，但技术上ICCCM不假定窗口名字可以改变。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>window-class</b><var> window </var><tt>#!optional</tt><var> spec<a name="index-window_002dclass-75"></a></var><br>
-<blockquote><p>If the optional argument <var>spec</var> is <code>nil</code>, returns the class
-that <var>window</var> belongs to as a string, or nil if <var>window</var> has
-no associated class.
+<blockquote><p>如果可选参数<var>spec</var>为<code>nil</code>，那么以字符串的形式返回<var>window</var>所属的类，如果<var>window</var>没有关联类，返回<code>nil</code>。
 
-        </p><p>ICCCM class consists of “Instance” and “Class”. If <var>spec</var> is
-the symbol <code>cons</code>, then the cons of the form
-<code>(</code><var>instance</var><code> . </code><var>class</var><code>)</code> is returned. If <var>spec</var> is
-the symbol <code>configurator</code>, then the string of the form
-“<var>instance</var>/<var>class</var>” is returned. 
+        </p><p>ICCCM类由“实例”和“类”组成。如果<var>spec</var>是符号<code>cons</code>，那么点对<code>(</code><var>instance</var><code> . </code><var>class</var><code>)</code>将成为返回值。如果<var>spec</var>是符号<code>configurator</code>，那么将返回形如“<var>instance</var>/<var>class</var>的字符串。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>window-role</b><var> window<a name="index-window_002drole-76"></a></var><br>
-<blockquote><p>Return the window role set by <code>NET_WM_ROLE</code>. 
+<blockquote><p>返回由<code>NET_WM_ROLE</code>设置的窗口角色。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>window-id</b><var> window<a name="index-window_002did-77"></a></var><br>
-<blockquote><p>If window object <var>window</var> has a client window associated with,
-return an integer defining its xid, otherwise return <code>nil</code>. 
+<blockquote><p>如果窗口对象<var>window</var>关联到一个客户端窗口，那么返回一个定义它的X ID的整数，否则返回<code>nil</code>。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>root-window-id</b><var><a name="index-root_002dwindow_002did-78"></a></var><br>
-<blockquote><p>Returns the numeric ID of the root window of the managed screen. 
+<blockquote><p>返回管理中的屏幕的根窗口的数值ID。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>window-dimensions</b><var> window<a name="index-window_002ddimensions-79"></a></var><br>
-<blockquote><p>Returns the size of the window <var>window</var> in a cons cell
-<code>(</code><var>width</var><code> . </code><var>height</var><code>)</code>. This does <em>not</em> include the
-frame. The size including the frame is returned by
-<code>window-frame-dimensions</code>. (see <a href="#Frame-Functions">Frame Functions</a>)
+<blockquote><p>以点对<code>(</code><var>width</var><code> . </code><var>height</var><code>)</code>的形式返回窗口<var>window</var>的大小。返回值<em>不</em>包括框架。<code>window-frame-dimension</code>（参见<a href="#Frame-Functions">框架函数</a>）将返回将框架计算在内的大小。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>window-position</b><var> window<a name="index-window_002dposition-80"></a></var><br>
-<blockquote><p>Returns the position of the window decorated with the frame in a
-cons-cell <code>(</code><var>x</var><code> . </code><var>y</var><code>)</code>. 
+<blockquote><p>以点对<code>(</code><var>x</var><code> . </code><var>y</var><code>)</code>的形式返回由框架装饰的窗口的位置。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>display-window-position</b> <tt>#!optional</tt><var> window<a name="index-display_002dwindow_002dposition-81"></a></var><br>
-<blockquote><p>Display <var>window</var>'s position and size in a popup. If the argument
-is <code>nil</code> or called as a command, user chooses the window by cursor
-and click.
+<blockquote><p>在弹出窗口中显示<var>window</var>的位置和大小。如果参数为<code>nil</code>或者以一个命令的形式调用，用户可以通过光标和点击来选取窗口。
 
-        </p><p>This function is defined in <code>sawfish.wm.util.display-wininfo</code>. 
+        </p><p>这个函数定义在<code>sawfish.wm.util.display-wininfo</code>中。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>get-window-wm-protocols</b><var> window<a name="index-get_002dwindow_002dwm_002dprotocols-82"></a></var><br>
-<blockquote><p>Return a list of symbols defining the X11 window manager protocols
-supported by client <var>window</var>. 
+<blockquote><p>返回一个定义了X11中被客户端<var>window</var>所支持的窗口管理器协议的符号列表。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>window-supports-wm-protocol-p</b><var> window atom<a name="index-window_002dsupports_002dwm_002dprotocol_002dp-83"></a></var><br>
-<blockquote><p>Return true if <var>window</var> includes <var>atom</var> in its
-<code>WM_PROTOCOLS</code> property. 
+<blockquote><p>如果<var>window</var>在它的<code>WM_PROTOCOLS</code>属性中包括<var>atom</var>就返回真。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>window-pid</b><var> window<a name="index-window_002dpid-84"></a></var><br>
-<blockquote><p>Returns the window process ID, or nil if not available. 
+<blockquote><p>返回窗口进程ID号，如果窗口不可用就返回nil。
 </p></blockquote></div>
 
-<p class="noindent">Listed here are window visibility predicates:
-<code>stacking-visibility</code>, <code>window-obscured</code> (see <a href="#Stacking-Visibility">Stacking Visibility</a>), <code>window-visible-p</code> (see <a href="#Showing-and-Hiding-Windows">Showing and Hiding Windows</a>), <code>window-shaped-p</code> (see <a href="#Shading-Windows">Shading Windows</a>),
-<code>window-iconified-p</code> (see <a href="#Iconifying-Windows">Iconifying Windows</a>),
-<code>window-in-workspace-p</code> (see <a href="#Workspaces-and-Windows">Workspaces and Windows</a>),
-<code>window-outside-viewport-p</code> (see <a href="#Windows-and-Viewports">Windows and Viewports</a>).
+<p class="noindent">这里列举了一些与窗口可见相关的谓词函数：
+<code>stacking-visibility</code>, <code>window-obscured</code> (参见<a href="#Stacking-Visibility">Stacking Visibility</a>), <code>window-visible-p</code> (参见 <a href="#Showing-and-Hiding-Windows">Showing and Hiding Windows</a>), <code>window-shaped-p</code> (参见 <a href="#Shading-Windows">Shading Windows</a>),
+<code>window-iconified-p</code> (参见 <a href="#Iconifying-Windows">Iconifying Windows</a>),
+<code>window-in-workspace-p</code> (参见 <a href="#Workspaces-and-Windows">Workspaces and Windows</a>),
+<code>window-outside-viewport-p</code> (参见 <a href="#Windows-and-Viewports">Windows and Viewports</a>).
 
-</p><p class="noindent">Various predicates:
+</p><p class="noindent">各种各样的谓词：
 
 </p><div class="defun">
 — 函数： <b>window-mapped-p</b><var> window<a name="index-window_002dmapped_002dp-85"></a></var><br>
-<blockquote><p>Return <code>t</code> if the client window associated with object
-<var>window</var> is mapped. (Note that this doesn't necessarily mean that
-it is visible.) 
+<blockquote><p>如果对象<var>window</var>所管理的客户端窗口被映射就返回<code>t</code>。（注意这不意味着它是可见的。）
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>window-shaped-p</b><var> window<a name="index-window_002dshaped_002dp-86"></a></var><br>
-<blockquote><p>Return <code>t</code> if <var>window</var> is shaped (possibly not rectangular). 
+<blockquote><p>如果<var>window</var>是不规则的（可能不是矩形的）就返回<code>t</code>。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>window-urgent-p</b><var> window<a name="index-window_002durgent_002dp-87"></a></var><br>
-<blockquote><p>Return <code>t</code> if the “Urgency” hint of the window associated with
-<var>window</var> is set. 
+<blockquote><p>如果关联到<var>window</var>上的窗口的“Urgency”标识被设置了就返回<code>t</code>。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>window-wants-input-p</b><var> window<a name="index-window_002dwants_002dinput_002dp-88"></a></var><br>
 — 函数： <b>window-really-wants-input-p</b><var> window<a name="index-window_002dreally_002dwants_002dinput_002dp-89"></a></var><br>
-<blockquote><p>See See <a href="#Input-Focus">Input Focus</a>. 
+<blockquote><p>看看 <a href="#Input-Focus">Input Focus</a>. 
 </p></blockquote></div>
 
 <div class="node">
