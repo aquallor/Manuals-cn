@@ -5017,7 +5017,7 @@ sawfish中最重要的数据类型之一是窗口类型。所有可管理的客�
 </p><p>基础:
 </p><ul class="menu">
 <li><a accesskey="1" href="#Window-Attributes">窗口属性</a>
-</li><li><a accesskey="2" href="#Getting-Windows">Getting Windows</a>:  Get window by name, class, all, etc. 
+</li><li><a accesskey="2" href="#Getting-Windows">获取窗口</a>:  获取窗口的名称、类、全部内容等。
 </li><li><a accesskey="3" href="#Window-Property-Lists">Window Property Lists</a>:  Plist attached by Sawfish. 
 </li><li><a accesskey="4" href="#Window-Types">Window Types</a>:   Some windows have type, like transient. 
 </li><li><a accesskey="5" href="#Input-Focus">Input Focus</a>
@@ -5145,7 +5145,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Windows">Windows</a>
 <blockquote><p>返回窗口进程ID号，如果窗口不可用就返回nil。
 </p></blockquote></div>
 
-<p class="noindent">这里列举了一些与窗口可见相关的谓词函数：
+<p class="noindent">这里列举了一些与窗口可见性相关的谓词函数：
 <code>stacking-visibility</code>, <code>window-obscured</code> (参见<a href="#Stacking-Visibility">Stacking Visibility</a>), <code>window-visible-p</code> (参见 <a href="#Showing-and-Hiding-Windows">Showing and Hiding Windows</a>), <code>window-shaped-p</code> (参见 <a href="#Shading-Windows">Shading Windows</a>),
 <code>window-iconified-p</code> (参见 <a href="#Iconifying-Windows">Iconifying Windows</a>),
 <code>window-in-workspace-p</code> (参见 <a href="#Workspaces-and-Windows">Workspaces and Windows</a>),
@@ -5183,66 +5183,54 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Windows">Windows</a>
 
 </div>
 
-<h3 class="section">8.2 Getting Windows</h3>
+<h3 class="section">8.2 获取窗口</h3>
 
 <p><a name="index-Getting-Windows-90"></a>
-First, functions which treat all windows.
+首先是应用在所有窗口上的函数。
 
 </p><div class="defun">
 — 函数： <b>managed-windows</b><var><a name="index-managed_002dwindows-91"></a></var><br>
-<blockquote><p>Returns a list containing all managed window objects, in the order that
-they were adopted by the window manager (first to last). 
+<blockquote><p>返回一个包含所有可管理的窗口对象的列表，排列顺序为它们被窗口管理器接管（第一到最后）的顺序。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>map-windows</b><var> function<a name="index-map_002dwindows-92"></a></var><br>
-<blockquote><p>Call <code>(</code><var>function</var> <var>window</var><code>)</code> on all existing windows. 
-Returns the value of the last <var>function</var> invocation.  If any
-<var>function</var> returns <code>nil</code>, <code>map-windows</code> returns
-<code>nil</code> immediately. 
+<blockquote><p>对所有存在的窗口调用<code>(</code><var>function</var> <var>window</var><code>)</code>。返回最后一次函数调用的返回值。如果当中有一个<var>function</var>调用返回了<code>nil</code>，那么<code>map-windows</code>立即返回<code>nil</code>。
 </p></blockquote></div>
 
-<p class="noindent">Functions to get specific windows.
+<p class="noindent">获取特定窗口的函数。
 
 </p><div class="defun">
 — 函数： <b>get-window-by-id</b><var> xid<a name="index-get_002dwindow_002dby_002did-93"></a></var><br>
-<blockquote><p>Return a window object with ID <var>xid</var>, or <code>nil</code>. 
+<blockquote><p>返回ID为<var>xid</var>的窗口对象或者<code>nil</code>。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>get-window-by-name</b><var> name #!key regex icon<a name="index-get_002dwindow_002dby_002dname-94"></a></var><br>
-<blockquote><p>Return a window object with name <var>name</var>, or <code>nil</code>.  Even if
-multiple windows are matched, one of them is returned.
+<blockquote><p>返回名字为<var>name</var>的窗口对象或者<code>nil</code>。就算有多个窗口匹配了，也只返回其中一个。
 
-        </p><p>If <code>regex</code> is non-nil, <var>name</var> is treated as a regex, and
-matched against window names.
+        </p><p>如果<code>regex</code>非空，那么<var>name</var>将被视为正则表达式，并且和窗口名字进行匹配。
 
-        </p><p>If <code>icon</code> is non-nil, window's icon name (set by
-<code>NEW_WM_ICON_NAME</code>, <em>not</em> EWMH <code>_NET_WM_ICON_NAME</code>) is
-searched, instead of the window's name. 
+        </p><p>如果<code>icon</code>非空，那么搜索窗口的图标名称（由<code>NEW_WM_ICON_NAME</code>, 而<em>不是</em> EWMH <code>_NET_WM_ICON_NAME</code>设置）而不是窗口的名称。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>get-window-by-class</b><var> class #!regex<a name="index-get_002dwindow_002dby_002dclass-95"></a></var><br>
-<blockquote><p>Same as the above, but the match is done against the window class. 
-Here, the class does not include the “instance”. (See <code>window-class</code> in
-See <a href="#Window-Attributes">Window Attributes</a>.)
+<blockquote><p>就像上面一样，但匹配对象为窗口的类。在这里，类不包括“instance”。（参见<a href="#Window-Attributes">窗口属性</a>中的<code>window-class</code>。）
 
-        </p><p>The option <code>regex</code> is boolean, not a regex, like <code>get-window-by-name</code>. 
+        </p><p>选项<code>regex</code>是一个布尔值，而不是正则表达式，就像在<code>get-window-by-name</code>中一样。
 </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>get-window-by-role</b><var> role<a name="index-get_002dwindow_002dby_002drole-96"></a></var><br>
-<blockquote><p>Same as the above, but the match is done against the window role.
+<blockquote><p>与上面一样，但匹配对象是窗口的角色。
 
-        </p><p>The option <code>regex</code> is boolean, not a regex, like <code>get-window-by-name</code>.
-
+        </p><p>选项<code>regex</code>是一个布尔值，而不是正则表达式，就像在<code>get-window-by-name</code>中一样。
         </p></blockquote></div>
 
 <div class="defun">
 — 函数： <b>filter-windows</b><var> pred<a name="index-filter_002dwindows-97"></a></var><br>
-<blockquote><p>Return the list of windows (mapped or unmapped) that match the
-predicate function <var>pred</var>. 
+<blockquote><p>返回匹配谓词函数<var>pred</var>的窗口的列表（不管有没有映射的）。
 </p></blockquote></div>
 
 <div class="node">
